@@ -56,14 +56,14 @@
     }
   },
   {
-    "Name": "Deny-PublicEndpoint-KeyVault",
+    "Name": "Audit-PublicEndpoint-KeyVault",
     "ResourceType": "Microsoft.Management/managementGroups",
     "ExtensionResourceType": "Microsoft.Authorization/policyDefinitions",
     "Properties": {
-      "displayName": "Deny-PublicEndpoint-KeyVault",
+      "displayName": "Audit-PublicEndpoint-KeyVault",
       "policyType": "Custom",
       "mode": "All",
-      "description": "This policy restrict creation of Key Vaults with IP Firewall exposed to all public endpoints",
+      "description": "This policy audit the restrict creation of Key Vaults with IP Firewall exposed to all public endpoints",
       "policyRule": {
         "if": {
           "allOf": [
@@ -78,7 +78,7 @@
           ]
         },
         "then": {
-          "effect": "Deny"
+          "effect": "Audit"
         }
       }
     }
