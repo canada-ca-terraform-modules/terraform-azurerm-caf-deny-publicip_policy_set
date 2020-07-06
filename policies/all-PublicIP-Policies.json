@@ -196,14 +196,14 @@
     }
   },
   {
-    "Name": "Deny-PublicEndpoint-Storage",
+    "Name": "Audit-PublicEndpoint-Storage",
     "ResourceType": "Microsoft.Management/managementGroups",
     "ExtensionResourceType": "Microsoft.Authorization/policyDefinitions",
     "Properties": {
-      "displayName": "Deny-PublicEndpoint-Storage",
+      "displayName": "Audit-PublicEndpoint-Storage",
       "policyType": "Custom",
       "mode": "All",
-      "description": "This policy restrict creation of storage accounts with IP Firewall exposed to all public endpoints",
+      "description": "This policy audit the restrict creation of storage accounts with IP Firewall exposed to all public endpoints",
       "policyRule": {
         "if": {
           "allOf": [
@@ -218,7 +218,7 @@
           ]
         },
         "then": {
-          "effect": "Deny"
+          "effect": "Audit"
         }
       }
     }
