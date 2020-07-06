@@ -1,9 +1,9 @@
-# Apply Diagnostics Policies on a Subscription
+# Apply Deny PublicIP Policies on a Subscription
 
 Reference the module to a specific version (recommended):
 ```hcl
-module Project-Diagnostic-Policy {
-  source                  = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-diagnostic_policy_set?ref=v0.1.0"
+module Project-Deny-PublicIP-Policy {
+  source                  = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-deny-publicip_policy_set?ref=v0.1.0"
   env                     = var.env
   userDefinedString       = local.prefix
   log_analytics_workspace = local.Project-law
