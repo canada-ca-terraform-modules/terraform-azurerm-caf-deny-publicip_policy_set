@@ -40,6 +40,6 @@ resource "azurerm_policy_set_definition" "policy_set_definition" {
   policy_type           = "Custom"
   display_name          = local.policy_set_name
   description           = "This initiative deny the deployment of resources with PublicIP."
-  management_group_name = var.management_group_name == null ? null : var.management_group_name
+  management_group_id   = var.management_group_name == null ? null : var.management_group_name
   policy_definitions    = jsonencode(local.policy_assignment)
 }
