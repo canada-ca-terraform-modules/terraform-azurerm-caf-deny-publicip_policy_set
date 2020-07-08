@@ -1,6 +1,4 @@
-# Apply Deny PublicIP Policies on a Subscription
-
-This module will apply a set of policies to deny the use of public IP on resources deployed in a subscription to comply with PBMM Guardrails.
+# Deploy Deny PublicIP Policies and PolicySet
 
 Reference the module to a specific version (recommended):
 ```hcl
