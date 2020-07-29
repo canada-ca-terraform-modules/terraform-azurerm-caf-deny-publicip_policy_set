@@ -16,3 +16,15 @@ FEATURES:
 IMPROVEMENTS:
 
 BUGS:
+
+## v0.2.0 (July 2020)
+
+FEATURES:
+
+* Add support for policy name postfix
+
+IMPROVEMENTS:
+
+BUGS:
+
+* Fix deprecation warning for azurerm_policy_set_definition

@@ -7,11 +7,12 @@ locals {
   policies = {
     for policy in jsondecode(local.policies_json) :
     policy.Name => {
-      name        = policy.Name
+      name        = "${policy.Name}${var.policy_name_postfix}"
       description = try(policy.Properties.description, "")
       policyRule  = policy.Properties.policyRule
     }
   }
+  /*
   policy_assignment = [
     for policy in jsondecode(local.policies_json) :
     {
@@ -19,6 +20,7 @@ locals {
       "policyDefinitionId" : "${var.management_group_name == null ? "/subscriptions/${local.subscriptionID}/providers/Microsoft.Authorization/policyDefinitions/${policy.Name}" : "/providers/Microsoft.Management/managementGroups/${var.management_group_name}/providers/Microsoft.Authorization/policyDefinitions/${policy.Name}"}"
     }
   ]
+  */
 }
 
 resource "azurerm_policy_definition" "policy_definition" {
@@ -36,10 +38,16 @@ resource "azurerm_policy_definition" "policy_definition" {
 resource "azurerm_policy_set_definition" "policy_set_definition" {
   depends_on            = [azurerm_policy_definition.policy_definition]
   count                 = var.deploy ? 1 : 0
-  name                  = local.policy_set_name
+  name                  = "${local.policy_set_name}${var.policy_name_postfix}"
   policy_type           = "Custom"
-  display_name          = local.policy_set_name
+  display_name          = "${local.policy_set_name}${var.policy_name_postfix}"
   description           = "This initiative deny the deployment of resources with PublicIP."
-  management_group_id   = var.management_group_name == null ? null : var.management_group_name
-  policy_definitions    = jsonencode(local.policy_assignment)
+  management_group_name = var.management_group_name == null ? null : var.management_group_name
+  dynamic "policy_definition_reference" {
+    for_each = jsondecode(local.policies_json)
+    content {
+      parameters = {}
+      policy_definition_id = var.management_group_name == null ? "/subscriptions/${local.subscriptionID}/providers/Microsoft.Authorization/policyDefinitions/${policy_definition_reference.value.Name}${var.policy_name_postfix}" : "/providers/Microsoft.Management/managementGroups/${var.management_group_name}/providers/Microsoft.Authorization/policyDefinitions/${policy_definition_reference.value.Name}${var.policy_name_postfix}"
+    }
+  }
 }
